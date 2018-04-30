@@ -1,16 +1,22 @@
-language: node_js
-dist: trusty
+###
+### .travis.yml
+###
+
+sudo: false
 os:
   - linux
   - osx
+dist: trusty
+language: node_js
 node_js:
-- '4'
-- '5'
-- '6'
-- '7'
-- 'node'
+  - '4'
+  - '6'
+  - '8'
+  - 'node'
+env:
+  - NODE_ENV=development
 before_install:
-  - npm i -g npm@latest
+  - npm install -g npm@5^
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -qq update; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y libnotify-bin; fi
 jobs:

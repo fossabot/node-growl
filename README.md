@@ -44,6 +44,27 @@ C:> echo %path:;=&echo.%
 C:> npm install growl
 ```
 
+## Getting Started
+
+This module consists of a single exported function. Use it as follows:
+
+```javascript
+// Import the module
+var growl = require('growl');
+
+// Invoke with only the `msg` argument
+growl('This is a test');
+
+// Repeat the previous notification, adding `options.title`
+growl('This is a test', { title: 'Test' });
+
+// Repeat the previous notification, adding `callback`
+growl('This is a test', { title: 'Test' }, function (error) {
+  console.error('notification failed.');
+  console.error(error);
+});
+```
+
 ## Arguments
 
 ### msg
@@ -61,7 +82,7 @@ Message to be displayed.
 - name
   - Application name
 - sound
-  - Alert sound (macOS 10.8+ only)
+  - Alert sound [macOS 10.8+ only]
 - image
   - Auto-detects the context on macOS:
     - path to an iconset --iconpath
@@ -94,10 +115,10 @@ However, the latter two arguments are only used in conjunction with
 var growl = require('growl')
 growl('You have mail!')
 growl('5 new messages', { sticky: true })
-growl('5 new emails', { title: 'Thunderbird', sound: 'Purr' })
 growl('5 new emails', { title: 'Email Client', image: 'Safari', sticky: true })
 growl('Message with title', { title: 'Title'})
 growl('Set priority', { priority: 2 })
+growl('Play sound on macOS', { title: 'Notification Center', sound: 'Purr' })
 growl('Show Safari icon', { image: 'Safari' })
 growl('Show icon', { image: 'path/to/icon.icns' })
 growl('Show image', { image: 'path/to/my.image.png' })

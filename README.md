@@ -1,13 +1,13 @@
 # Growl for Node.js
 
 [![Build Status][Travis-NodeGrowl-badge]][Travis-NodeGrowl]
-[![Dependency Status][DavidDM-NodeGrowlDep-badge]][DavidDM-NodeGrowlDep]
+[![Dependency Status][David-NodeGrowlDep-badge]][David-NodeGrowlDep]
 [![devDependency Status][David-NodeGrowlDevDep-badge]][David-NodeGrowlDevDep]
 
 This is essentially a port of my [Ruby Growl Library][].
 Ubuntu/Linux support added thanks to [@niftylettuce][].
 
-[![NPM][NPM-Abao-badge]][NPM-Abao]
+[![NPM][NPM-NodeGrowl-badge]][NPM-NodeGrowl]
 
 ## Installation
 
@@ -92,7 +92,7 @@ growl('Show pdf filesystem icon', { image: 'article.pdf' }, function(err){
 [@niftylettuce]: https://github.com/niftylettuce/
 [npm]: https://npmjs.org/
 [terminal-notifier]: https://github.com/alloy/terminal-notifier/
-[libnotify-bin]: https://packages.ubuntu.com/trusty/libnotify-bin/
+[libnotify-bin]: https://packages.ubuntu.com/trusty/libnotify-bin
 [Growl for Windows]: http://www.growlforwindows.com/gfw/default.aspx
 [growlnotify(mac)]: http://growl.info/extras.php#growlnotify
 [growlnotify(win)]: http://www.growlforwindows.com/gfw/help/growlnotify.aspx

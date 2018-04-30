@@ -11,44 +11,90 @@ Ubuntu/Linux support added thanks to [@niftylettuce][].
 
 ## Installation
 
-### Mac OS X (Darwin):
+### macOS:
 
-  Install [growlnotify(mac)][]. On OS X 10.8, Notification Center is supported using [terminal-notifier][]. To install:
+On OS X 10.8+, Notification Center is supported via [terminal-notifier][].
 
-    $ sudo gem install terminal-notifier
+```bash
+$ sudo gem install terminal-notifier
+$ npm install growl
+```
 
-  Install [npm][] and run:
+Many years ago, the instructions would have used the original developer's
+product [growlnotify (mac)][], but unsure if it still works.
 
-    $ npm install growl
+### Linux:
 
-### Ubuntu (Linux):
+Install "notify-send" through the [libnotify-bin][] APT package. If you use
+RPM packages, substitute appropriately.
 
-  Install `notify-send` through the [libnotify-bin][] package:
-
-    $ sudo apt-get install libnotify-bin
-
-  Install [npm][] and run:
-
-    $ npm install growl
+```bash
+$ sudo apt-get install libnotify-bin
+$ npm install growl
+```
 
 ### Windows:
 
-  Download and install [Growl for Windows][]
+Download and install [Growl for Windows][]
 
-  Download [growlnotify(win)][] - **IMPORTANT :** Unpack growlnotify to a folder that is present in your path!
+Download [growlnotify (win)][] - **IMPORTANT :** Unpack "growlnotify" to a folder that is present in your **PATH**!
 
-  Install [npm][] and run:
+```posh
+C:> echo %path:;=&echo.%
+C:> npm install growl
+```
 
-    $ npm install growl
+## Arguments
+
+### msg
+
+Message to be displayed.
+
+### options
+
+- title
+  - Notification title
+- sticky
+  - Should the notification should remain until closed? (default is false)
+- priority
+  - Priority for the notification (default is 0)
+- name
+  - Application name
+- sound
+  - Alert sound (macOS 10.8+ only)
+- image
+  - Auto-detects the context on macOS:
+    - path to an iconset --iconpath
+    - path to an image --image
+    - capitalized word sets --appIcon
+    - filename uses extname as --icon
+    - otherwise treated as --icon
+- exec
+  - Manually specify a shell command instead
+    - appends message to end of shell command
+    - or, replaces `%s` with message
+    - optionally prepends title (example: `title: message`)
+    - examples:
+      - `{exec: 'tmux display-message'}`
+      - `{exec: 'echo "%s" > messages.log}`
+
+### callback
+
+Callback function is optional. If notifications are not occurring, this
+can be used to troubleshoot. Its function signature is:
+```js
+function (error, stdout, stderr)
+```
+However, the latter two arguments are only used in conjunction with
+`options.exec`.
 
 ## Examples
-
-Callback functions are optional
 
 ```javascript
 var growl = require('growl')
 growl('You have mail!')
 growl('5 new messages', { sticky: true })
+growl('5 new emails', { title: 'Thunderbird', sound: 'Purr' })
 growl('5 new emails', { title: 'Email Client', image: 'Safari', sticky: true })
 growl('Message with title', { title: 'Title'})
 growl('Set priority', { priority: 2 })
@@ -58,44 +104,19 @@ growl('Show image', { image: 'path/to/my.image.png' })
 growl('Show png filesystem icon', { image: 'png' })
 growl('Show pdf filesystem icon', { image: 'article.pdf' })
 growl('Show pdf filesystem icon', { image: 'article.pdf' }, function(err){
-  // ... notified
+  // handle error...
 })
 ```
-
-## Options
-
-  - title
-    - notification title
-  - name
-    - application name
-  - priority
-    - priority for the notification (default is 0)
-  - sticky
-    - weither or not the notification should remainin until closed
-  - image
-    - Auto-detects the context:
-      - path to an icon sets --iconpath
-      - path to an image sets --image
-      - capitalized word sets --appIcon
-      - filename uses extname as --icon
-      - otherwise treated as --icon
-  - exec
-    - manually specify a shell command instead
-      - appends message to end of shell command
-      - or, replaces `%s` with message
-      - optionally prepends title (example: `title: message`)
-      - examples: `{exec: 'tmux display-message'}`, `{exec: 'echo "%s" > messages.log}`
 
 [//]: # (Cross reference section)
 
 [Ruby Growl Library]: https://github.com/visionmedia/growl/
 [@niftylettuce]: https://github.com/niftylettuce/
-[npm]: https://npmjs.org/
 [terminal-notifier]: https://github.com/alloy/terminal-notifier/
 [libnotify-bin]: https://packages.ubuntu.com/trusty/libnotify-bin
 [Growl for Windows]: http://www.growlforwindows.com/gfw/default.aspx
-[growlnotify(mac)]: http://growl.info/extras.php#growlnotify
-[growlnotify(win)]: http://www.growlforwindows.com/gfw/help/growlnotify.aspx
+[growlnotify (win)]: http://www.growlforwindows.com/gfw/help/growlnotify.aspx
+[growlnotify (mac)]: http://growl.info/extras.php#growlnotify
 
 [Travis-NodeGrowl]: https://travis-ci.org/tj/node-growl/
 [Travis-NodeGrowl-badge]: https://travis-ci.org/tj/node-growl.svg?branch=master

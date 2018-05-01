@@ -27,19 +27,19 @@ jobs:
       env:
         - NODE_ENV=production
     - <<: *test
-      os: osx
-    - <<: *test
       node_js: '8'
     - <<: *test
-      node_js: '8'
-      os: osx
-    - <<: *test
       node_js: '6'
-    - <<: *test
-      node_js: '6'
-      os: osx
     - <<: *test
       node_js: '4'
+    - <<: *test
+      os: osx
+    - <<: *test
+      node_js: '8'
+      os: osx
+    - <<: *test
+      node_js: '6'
+      os: osx
     - <<: *test
       node_js: '4'
       os: osx

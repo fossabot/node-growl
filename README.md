@@ -11,7 +11,7 @@ Ubuntu/Linux support added thanks to [@niftylettuce][].
 
 ## Installation
 
-### macOS:
+### macOS
 
 On OS X 10.8+, Notification Center is supported via [terminal-notifier][].
 
@@ -23,7 +23,7 @@ $ npm install growl
 Many years ago, the instructions would have used the original developer's
 product [growlnotify (mac)][], but unsure if it still works.
 
-### Linux:
+### Linux
 
 Install "notify-send" through the [libnotify-bin][] APT package. If you use
 RPM packages, substitute appropriately.
@@ -33,7 +33,7 @@ $ sudo apt-get install libnotify-bin
 $ npm install growl
 ```
 
-### Windows:
+### Windows
 
 Download and install [Growl for Windows][]
 
@@ -73,39 +73,41 @@ Message to be displayed.
 
 ### options
 
-- title
-  - Notification title
-- sticky
-  - Should the notification should remain until closed? (default is false)
-- priority
-  - Priority for the notification (default is 0)
-- name
-  - Application name
-- sound
-  - Alert sound [macOS 10.8+ only]
-- image
-  - Auto-detects the context on macOS:
-    - path to an iconset --iconpath
-    - path to an image --image
-    - capitalized word sets --appIcon
-    - filename uses extname as --icon
-    - otherwise treated as --icon
-- exec
-  - Manually specify a shell command instead
-    - appends message to end of shell command
-    - or, replaces `%s` with message
-    - optionally prepends title (example: `title: message`)
-    - examples:
-      - `{exec: 'tmux display-message'}`
-      - `{exec: 'echo "%s" > messages.log}`
+* title
+  * Notification title
+* sticky
+  * Should the notification should remain until closed? (default is false)
+* priority
+  * Priority for the notification (default is 0)
+* name
+  * Application name
+* sound
+  * Alert sound [macOS 10.8+ only]
+* image
+  * Auto-detects the context on macOS:
+    * path to an iconset --iconpath
+    * path to an image --image
+    * capitalized word sets --appIcon
+    * filename uses extname as --icon
+    * otherwise treated as --icon
+* exec
+  * Manually specify a shell command instead
+    * appends message to end of shell command
+    * or, replaces `%s` with message
+    * optionally prepends title (example: `title: message`)
+    * examples:
+      * `{exec: 'tmux display-message'}`
+      * `{exec: 'echo "%s" > messages.log}`
 
 ### callback
 
 Callback function is optional. If notifications are not occurring, this
 can be used to troubleshoot. Its function signature is:
+
 ```js
 function (error, stdout, stderr)
 ```
+
 However, the latter two arguments are only used in conjunction with
 `options.exec`.
 

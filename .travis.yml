@@ -2,7 +2,7 @@
 ### .travis.yml
 ###
 
-sudo: false
+sudo: true
 os: linux
 dist: trusty
 language: node_js
@@ -11,21 +11,25 @@ before_install:
   - npm install -g npm@^5    # npm-6 dropped support for Node-4
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -qq update; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y libnotify-bin; fi
+  - if [[ "$TRAVIS_OS_NAME" == "darwin" ]]; then npm install terminal-notifier; fi
 stages:
   - lint # lint code and docs
   - test # all tests
 jobs:
   include:
+    ## Lint stage runs single job [Node-latest, Linux]
     - stage: lint
       script: npm run lint
       env:
         - NODE_ENV=development
       before_install: false
+    ## Test stage runs multiple jobs [Node-{10|8|6|4}, {Linux|macOS}]
     - &test
       stage: test
       script: npm test
       env:
         - NODE_ENV=production
+      node_js: '10'
     - <<: *test
       node_js: '8'
     - <<: *test
@@ -33,6 +37,7 @@ jobs:
     - <<: *test
       node_js: '4'
     - <<: *test
+      node_js: '10'
       os: osx
     - <<: *test
       node_js: '8'

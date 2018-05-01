@@ -3,9 +3,7 @@
 ###
 
 sudo: false
-os:
-  - linux
-  - osx
+os: linux
 dist: trusty
 language: node_js
 node_js: 'node'
@@ -27,6 +25,9 @@ jobs:
     - &test
       stage: test
       script: npm test
+      os:
+        - linux
+        - osx
       env:
         - NODE_ENV=production
     - <<: *test

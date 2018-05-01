@@ -12,7 +12,8 @@ growl('Show icon', { image: 'path/to/icon.icns' })
 growl('Show image', { image: 'path/to/my.image.png' })
 growl('Show png filesystem icon', { image: 'png' })
 growl('Show pdf filesystem icon', { image: 'article.pdf' })
-growl('Show pdf filesystem icon', { image: 'article.pdf' }, function(){
+growl('Show pdf filesystem icon', { image: 'article.pdf' }, function(error) {
+  console.log(error);
   console.log('callback');
 })
 growl('Show pdf filesystem icon', { title: 'Use show()', image: 'article.pdf' })
@@ -20,12 +21,15 @@ growl('here \' are \n some \\ characters that " need escaping', {}, function(err
   if (error) throw new Error('escaping failed:\n' + stdout + stderr);
 })
 growl('Allow custom notifiers', { exec: 'echo XXX %s' }, function(error, stdout, stderr) {
+  if (error) console.error(error);
   console.log(stdout);
 })
 growl('Allow custom notifiers', { title: 'test', exec: 'echo YYY' }, function(error, stdout, stderr) {
+  if (error) console.error(error);
   console.log(stdout);
 })
 growl('Allow custom notifiers', { title: 'test', exec: 'echo ZZZ %s' }, function(error, stdout, stderr) {
+  if (error) console.error(error);
   console.log(stdout);
 })
 growl('Open a URL', { url: 'https://npmjs.org/package/growl' });

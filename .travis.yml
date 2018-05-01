@@ -11,8 +11,8 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -qq update; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y libnotify-bin; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ls -al /usr/lib; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ls -al /usr/lib/notification-daemon-1.0; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo /usr/lib/notification-daemon-1.0/notification-daemon &; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ls -al /usr/lib/notification-daemon; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo /usr/lib/notification-daemon/notification-daemon &; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm install terminal-notifier; fi
 stages:
   - lint # lint code and docs

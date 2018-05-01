@@ -33,26 +33,26 @@ jobs:
       env:
         - NODE_ENV=production
       node_js: '10'
-    - <<: *test
-      node_js: '8'
-    - <<: *test
-      node_js: '6'
-    - <<: *test
-      node_js: '4'
+#    - <<: *test
+#      node_js: '8'
+#    - <<: *test
+#      node_js: '6'
+#    - <<: *test
+#      node_js: '4'
     - <<: *test
       node_js: '10'
       os: osx
       sudo: false
-    - <<: *test
-      node_js: '8'
-      os: osx
-      sudo: false
-    - <<: *test
-      node_js: '6'
-      os: osx
-      sudo: false
-    - <<: *test
-      node_js: '4'
-      os: osx
-      sudo: false
+#    - <<: *test
+#      node_js: '8'
+#      os: osx
+#      sudo: false
+#    - <<: *test
+#      node_js: '6'
+#      os: osx
+#      sudo: false
+#    - <<: *test
+#      node_js: '4'
+#      os: osx
+#      sudo: false
 

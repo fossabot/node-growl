@@ -8,15 +8,9 @@ os:
   - osx
 dist: trusty
 language: node_js
-node_js:
-  - '4'
-  - '6'
-  - '8'
-  - 'node'
-env:
-  - NODE_ENV=production
+node_js: 'node'
 before_install:
-  - npm install -g npm@^5
+  - npm install -g npm@^5    # npm-6 dropped support for Node-4
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -qq update; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y libnotify-bin; fi
 stages:
@@ -28,5 +22,17 @@ jobs:
       script: npm run lint
       env:
         - NODE_ENV=development
-    - stage: test
+      os: linux
+      before_install: false
+    - &test
+      stage: test
       script: npm test
+      env:
+        - NODE_ENV=production
+    - <<: *test
+      node_js: '8'
+    - <<: *test
+      node_js: '6'
+    - <<: *test
+      node_js: '4'
+

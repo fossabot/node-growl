@@ -1,0 +1,80 @@
+###
+### .appveyor.yml
+###
+
+##
+## General
+##
+
+## AppVeyor build number (must be unique across ALL builds)
+version: '{build}-{branch}'
+
+## Disable new AppVeyor build based on GH commit message title
+skip_commits:
+  message: /\[ci\s+skip\]/
+
+##
+## Environment
+##
+
+## Clone repository (Downloads specific GitHub commit)
+shallow_clone: true
+
+## Build matrix
+environment:
+  NODE_ENV: development
+
+  ## Test against these Node.js releases
+  matrix:
+    - nodejs_version: '10'
+    - nodejs_version: '8'
+    - nodejs_version: '6'
+    - nodejs_version: '4'
+
+matrix:
+  ## Fail build immediately once any job fails 
+  fast_finish: true
+
+## Install scripts (runs after repo cloning)
+install:
+  ## Get latest stable version
+  - ps: Install-Product node $env:nodejs_version x64
+  ## Set environment
+  #- set CI=true (Should already be set)
+  - set PATH=%APPDATA%\npm;C:\MinGW\bin;%PATH%
+  ## Install NPM-5.x
+  - npm install -g npm@^5
+  ## Install package dependencies
+  - npm install
+
+##
+## Build
+##
+
+## Build platform
+platform:
+  - x64
+
+## Disable build phase (MS-specific)
+build: off
+
+##
+## Test
+##
+
+## Test phase
+test_script:
+  ## Output for debugging
+  - node --version
+  - npm --version
+  ## Run package tests
+  - npm test
+
+##
+## Global handlers
+##
+
+## On successful build...
+on_success:
+  - ps: Write-Host "Success"
+

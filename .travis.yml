@@ -16,17 +16,24 @@ node_js:
 env:
   - NODE_ENV=production
 script: npm test
+addons:
+  apt:
+    update: true
+    packages:
+    - libnotify-bin
+    - xvfb
 before_install:
   - npm install -g npm@^5    # npm-6 dropped support for Node-4
   - |
     if [[ "$TRAVIS_OS_NAME" == "linux" ]];
     then
-      INIT_D_XVFB_SCRIPT_RAW="https://gist.githubusercontent.com/dloman/8303932/raw/a9534ba144388014aab20776e84db2c720a366bf/xvfb"
+      XVFB_SCRIPT_RAW="https://gist.githubusercontent.com/dloman/8303932/raw/a9534ba144388014aab20776e84db2c720a366bf/xvfb"
       INIT_D_XVFB_SCRIPT="/etc/init.d/xvfb"
-      sudo apt-get -qq update
-      sudo apt-get install -y libnotify-bin xvfb
-      sudo curl $INIT_D_XVFB_SCRIPT_RAW -o $INIT_D_XVFB_SCRIPT
-      sudo sed -i '1 s/^/#! /bin/sh\n/' $INIT_D_XVFB_SCRIPT
+      #sudo apt-get -qq update
+      #sudo apt-get install -y libnotify-bin xvfb
+      sudo curl --silent --show-error $XVFB_SCRIPT_RAW -o $INIT_D_XVFB_SCRIPT
+      sudo sed -i '1 s/^/#! /bin/sh\\\n/' $INIT_D_XVFB_SCRIPT
+      head $INIT_D_XVFB_SCRIPT
       sudo chmod 755 $INIT_D_XVFB_SCRIPT
       sudo update-rc.d xvfb defaults
       sudo service xvfb start

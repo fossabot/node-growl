@@ -30,7 +30,7 @@ before_install:
       XVFB_SCRIPT_RAW="https://gist.githubusercontent.com/dloman/8303932/raw/a9534ba144388014aab20776e84db2c720a366bf/xvfb"
       INIT_D_XVFB_SCRIPT="/etc/init.d/xvfb"
       sudo curl --silent --show-error $XVFB_SCRIPT_RAW -o $INIT_D_XVFB_SCRIPT
-      sudo sed -i '1 s/^/#! /bin/sh\\n/' $INIT_D_XVFB_SCRIPT
+      sudo sed -i -e '1i#! /bin/sh\n' $INIT_D_XVFB_SCRIPT
       head $INIT_D_XVFB_SCRIPT
       sudo chmod 755 $INIT_D_XVFB_SCRIPT
       sudo update-rc.d xvfb defaults

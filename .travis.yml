@@ -6,7 +6,7 @@ sudo: true
 dist: trusty
 os:
   - linux
-  - osx
+#  - osx
 language: node_js
 node_js:
   - 10
@@ -32,7 +32,7 @@ before_install:
       #sudo apt-get -qq update
       #sudo apt-get install -y libnotify-bin xvfb
       sudo curl --silent --show-error $XVFB_SCRIPT_RAW -o $INIT_D_XVFB_SCRIPT
-      sudo sed -i '1 s/^/#! /bin/sh\\\n/' $INIT_D_XVFB_SCRIPT
+      sudo sed -i '1 s/^/#! /bin/sh\\n/' $INIT_D_XVFB_SCRIPT
       head $INIT_D_XVFB_SCRIPT
       sudo chmod 755 $INIT_D_XVFB_SCRIPT
       sudo update-rc.d xvfb defaults
@@ -60,7 +60,8 @@ jobs:
       env:
         - NODE_ENV=development
       addons:
-        apt: false
+        apt:
+          update: false
       before_install: false
     ## Test stage runs multiple jobs [Node-?, {Linux|macOS}]
 

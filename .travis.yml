@@ -59,6 +59,8 @@ jobs:
       node_js: 'node'
       env:
         - NODE_ENV=development
+      addons:
+        apt: false
       before_install: false
     ## Test stage runs multiple jobs [Node-?, {Linux|macOS}]
 

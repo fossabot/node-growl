@@ -2,18 +2,45 @@
 ### .travis.yml
 ###
 
-os: linux
+sudo: true
 dist: trusty
+os:
+  - linux
+  - osx
 language: node_js
-node_js: 'node'
+node_js:
+  - 10
+#  - 8
+#  - 6
+#  - 4
+env:
+  - NODE_ENV=production
+script: npm test
 before_install:
   - npm install -g npm@^5    # npm-6 dropped support for Node-4
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -qq update; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y libnotify-bin; fi
-#  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ls -al /usr/lib/notification-daemon; fi
-#  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ps auxww | grep notif; fi
-#  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo /usr/lib/notification-daemon/notification-daemon& ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm install terminal-notifier; fi
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "linux" ]];
+    then
+      INIT_D_XVFB_SCRIPT_RAW="https://gist.githubusercontent.com/dloman/8303932/raw/a9534ba144388014aab20776e84db2c720a366bf/xvfb"
+      INIT_D_XVFB_SCRIPT="/etc/init.d/xvfb"
+      sudo apt-get -qq update
+      sudo apt-get install -y libnotify-bin xvfb
+      sudo curl $INIT_D_XVFB_SCRIPT_RAW -o $INIT_D_XVFB_SCRIPT
+      sudo sed -i '1 s/^/#! /bin/sh\n/' $INIT_D_XVFB_SCRIPT
+      sudo chmod 755 $INIT_D_XVFB_SCRIPT
+      sudo update-rc.d xvfb defaults
+      sudo service xvfb start
+      sleep 1
+      sudo service xvfb status
+      sudo sh -c "echo 'DISPLAY=\":1.0\"' >> /etc/environment"
+      sudo /usr/lib/notification-daemon/notification-daemon&
+      ps auxww | grep notif
+    fi
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "osx" ]];
+    then
+      npm install terminal-notifier
+    fi
 stages:
   - lint # lint code and docs
   - test # all tests
@@ -22,37 +49,9 @@ jobs:
     ## Lint stage runs single job [Node-latest, Linux]
     - stage: lint
       script: npm run lint
+      node_js: 'node'
       env:
         - NODE_ENV=development
       before_install: false
-    ## Test stage runs multiple jobs [Node-{10|8|6|4}, {Linux|macOS}]
-    - &test
-      stage: test
-      script: npm test
-      sudo: true
-      env:
-        - NODE_ENV=production
-      node_js: '10'
-#    - <<: *test
-#      node_js: '8'
-#    - <<: *test
-#      node_js: '6'
-#    - <<: *test
-#      node_js: '4'
-    - <<: *test
-      node_js: '10'
-      os: osx
-      sudo: false
-#    - <<: *test
-#      node_js: '8'
-#      os: osx
-#      sudo: false
-#    - <<: *test
-#      node_js: '6'
-#      os: osx
-#      sudo: false
-#    - <<: *test
-#      node_js: '4'
-#      os: osx
-#      sudo: false
+    ## Test stage runs multiple jobs [Node-?, {Linux|macOS}]
 

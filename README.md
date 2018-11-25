@@ -3,6 +3,7 @@
 [![Build Status][Travis-NodeGrowl-badge]][Travis-NodeGrowl]
 [![Dependency Status][David-NodeGrowlDep-badge]][David-NodeGrowlDep]
 [![devDependency Status][David-NodeGrowlDevDep-badge]][David-NodeGrowlDevDep]
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fplroebuck%2Fnode-growl.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fplroebuck%2Fnode-growl?ref=badge_shield)
 
 This is essentially a port of my [Ruby Growl Library][].
 Ubuntu/Linux support added thanks to [@niftylettuce][].
@@ -150,3 +151,7 @@ growl('Show pdf filesystem icon', { image: 'article.pdf' }, function(err){
 [NPM-NodeGrowl]: https://npmjs.org/package/node-growl/
 [NPM-NodeGrowl-badge]: https://nodei.co/npm/node-growl.png?downloads=true&downloadRank=true&stars=true
 
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fplroebuck%2Fnode-growl.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fplroebuck%2Fnode-growl?ref=badge_large)
